@@ -1,3 +1,6 @@
+package com.project.config;
+
+import com.project.config.PropertyReader;
 import twitter4j.TwitterFactory;
 import twitter4j.conf.ConfigurationBuilder;
 

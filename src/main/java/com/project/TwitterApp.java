@@ -1,3 +1,8 @@
+package com.project;
+
+import com.project.config.CredentialConfiguration;
+import com.project.config.PropertyReader;
+import com.project.service.FilteredStream;
 import twitter4j.*;
 
 public class TwitterApp {
