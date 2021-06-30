@@ -10,6 +10,7 @@ import java.util.Properties;
 public class FilteredStreamTwitter4J {
 
     public static void main(String args[]) throws IOException, URISyntaxException {
+        // Reads in keys & tokens from a local properties file to avoid displaying sensitive information
         Properties TwitterAPI = new Properties();
         try (FileReader in = new FileReader("TwitterAPI.properties")) {
             TwitterAPI.load(in);
@@ -29,17 +30,18 @@ public class FilteredStreamTwitter4J {
         TwitterFactory tf = new TwitterFactory(cb.build());
         Twitter twitter = tf.getInstance();
 
-        // Modified source code from this site: https://twitter4j.org/en/code-examples.html
+        // Reference this site: https://twitter4j.org/en/code-examples.html
         try {
             // Query object allows you to search for certain strings
             // Each QueryResult will get around 15 tweets, unless otherwise assigned
             Query query = new Query("suns");
             QueryResult result;
             int queryResultNum = 1;
-
+            // TODO: Catch or manage SocketTimeoutException that occasionally occurs
             do {
                 result = twitter.search(query);
                 int tweetNumber = 1;
+                // Each Status object represents an individual tweet
                 for (Status status : result.getTweets()) {
                     if (tweetNumber <= 5) {
                         System.out.println("Query Result Number #" + queryResultNum + ", Tweet Number #" + tweetNumber);
