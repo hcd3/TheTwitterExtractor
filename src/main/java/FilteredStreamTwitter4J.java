@@ -1,32 +1,20 @@
 import twitter4j.*;
 import twitter4j.conf.ConfigurationBuilder;
 
-import java.io.FileReader;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.util.Properties;
-
 // Filtered Stream: Get all the Tweets in real-time that match the search criteria you've set.
 public class FilteredStreamTwitter4J {
 
-    public static void main(String args[]) throws IOException, URISyntaxException {
-        // Reads in keys & tokens from a local properties file to avoid displaying sensitive information
-        Properties TwitterAPI = new Properties();
-        try (FileReader in = new FileReader("src/main/resources/TwitterAPI.properties")) {
-            TwitterAPI.load(in);
-        }
-        String ConsumerKey = TwitterAPI.getProperty("ConsumerKey");
-        String ConsumerSecret = TwitterAPI.getProperty("ConsumerSecret");
-        String AccessToken = TwitterAPI.getProperty("AccessToken");
-        String AccessTokenSecret = TwitterAPI.getProperty("AccessTokenSecret");
+    public static void main(String args[]) {
+        PropertyReader propertyReader = new PropertyReader();
+        propertyReader.readPropertiesFile();
 
         // Configures OAuth credentials for Twitter4J
         ConfigurationBuilder cb = new ConfigurationBuilder();
         cb.setDebugEnabled(true)
-                .setOAuthConsumerKey(ConsumerKey)
-                .setOAuthConsumerSecret(ConsumerSecret)
-                .setOAuthAccessToken(AccessToken)
-                .setOAuthAccessTokenSecret(AccessTokenSecret);
+                .setOAuthConsumerKey(propertyReader.getConsumerKey())
+                .setOAuthConsumerSecret(propertyReader.getConsumerSecret())
+                .setOAuthAccessToken(propertyReader.getAccessToken())
+                .setOAuthAccessTokenSecret(propertyReader.getAccessTokenSecret());
         TwitterFactory tf = new TwitterFactory(cb.build());
         Twitter twitter = tf.getInstance();
 
