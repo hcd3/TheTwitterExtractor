@@ -17,7 +17,7 @@ public class FilteredStreamTwitter4J {
         try {
             // Query object allows you to search for certain strings
             // Each QueryResult will get around 15 tweets, unless otherwise assigned
-            Query query = new Query("suns");
+            Query query = new Query("GoHealth");
             QueryResult result;
             int queryResultNum = 1;
             // TODO: Catch or manage SocketTimeoutException that occasionally occurs
@@ -26,7 +26,7 @@ public class FilteredStreamTwitter4J {
                 int tweetNumber = 1;
                 // Each Status object represents an individual tweet
                 for (Status status : result.getTweets()) {
-                    if (tweetNumber <= 5) {
+                    if (tweetNumber <= 20) {
                         System.out.println("Query Result Number #" + queryResultNum + ", Tweet Number #" + tweetNumber);
                         System.out.println("@" + status.getUser().getScreenName() + ":" + status.getText());
                         System.out.println("*************************************************************");

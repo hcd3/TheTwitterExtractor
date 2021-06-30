@@ -3,8 +3,8 @@ import twitter4j.conf.ConfigurationBuilder;
 
 public class CredentialConfiguration {
 
-    private PropertyReader propertyReader;
-    private ConfigurationBuilder configBuilder;
+    private final PropertyReader propertyReader;
+    private final ConfigurationBuilder configBuilder;
 
     public CredentialConfiguration(PropertyReader propertyReader) {
         this.propertyReader = propertyReader;
