@@ -8,15 +8,10 @@ public class FilteredStreamTwitter4J {
         PropertyReader propertyReader = new PropertyReader();
         propertyReader.readPropertiesFile();
 
-        // Configures OAuth credentials for Twitter4J
-        ConfigurationBuilder cb = new ConfigurationBuilder();
-        cb.setDebugEnabled(true)
-                .setOAuthConsumerKey(propertyReader.getConsumerKey())
-                .setOAuthConsumerSecret(propertyReader.getConsumerSecret())
-                .setOAuthAccessToken(propertyReader.getAccessToken())
-                .setOAuthAccessTokenSecret(propertyReader.getAccessTokenSecret());
-        TwitterFactory tf = new TwitterFactory(cb.build());
-        Twitter twitter = tf.getInstance();
+        CredentialConfiguration credentialConfig = new CredentialConfiguration(propertyReader);
+        credentialConfig.buildConfig();
+        TwitterFactory twitterFactory = credentialConfig.createTwitterFactory();
+        Twitter twitter = twitterFactory.getInstance();
 
         // Reference this site: https://twitter4j.org/en/code-examples.html
         try {
