@@ -12,7 +12,7 @@ public class FilteredStreamTwitter4J {
     public static void main(String args[]) throws IOException, URISyntaxException {
         // Reads in keys & tokens from a local properties file to avoid displaying sensitive information
         Properties TwitterAPI = new Properties();
-        try (FileReader in = new FileReader("TwitterAPI.properties")) {
+        try (FileReader in = new FileReader("src/main/resources/TwitterAPI.properties")) {
             TwitterAPI.load(in);
         }
         String ConsumerKey = TwitterAPI.getProperty("ConsumerKey");
