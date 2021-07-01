@@ -1,6 +1,10 @@
 package com.project.service;
 
+import com.project.model.Tweet;
 import twitter4j.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Filtered Stream: Get all the Tweets in real-time that match the search criteria you've set.
@@ -20,8 +24,10 @@ public class FilteredStream {
      * Reference: https://twitter4j.org/en/code-examples.html
      *
      * @param searchTerm The phrase that will be searched
+     * @return           List of Tweet objects in the order they were retrieved
      */
-    public void search(String searchTerm) {
+    public List<Tweet> search(String searchTerm) {
+        List<Tweet> listOfTweets = new ArrayList<>();
         try {
             // Each QueryResult will get around 15 tweets, unless otherwise assigned
             Query query = new Query(searchTerm);
@@ -30,7 +36,8 @@ public class FilteredStream {
             int tweetNumber = 1;
             for (Status status : result.getTweets()) {
                 if (tweetNumber <= 5) {
-                    printTweet(status, 1, tweetNumber);
+                    Tweet tweet = new Tweet(status, 1, tweetNumber);
+                    listOfTweets.add(tweet);
                     tweetNumber++;
                 }
             }
@@ -38,6 +45,8 @@ public class FilteredStream {
             twe.printStackTrace();
             System.out.println("Could not find tweets due to a TwitterException error: " + twe.getErrorMessage());
         }
+
+        return listOfTweets;
     }
 
     /**
@@ -49,11 +58,13 @@ public class FilteredStream {
      * @param searchTerm        The phrase that will be searched
      * @param numOfQueryResults Amount of Query Result objects to search; each contains a max of 15 tweets
      * @param numOfTweets       Amount of tweets to search in each Query Result; does not exceed 15
+     * @return                  List of Tweet objects in the order they were retrieved
      */
-    public void search(String searchTerm, int numOfQueryResults, int numOfTweets) {
+    public List<Tweet> search(String searchTerm, int numOfQueryResults, int numOfTweets) {
+        List<Tweet> listOfTweets = new ArrayList<>();
         try {
             if (numOfQueryResults <= 0 || numOfTweets <= 0) {
-                return;
+                return listOfTweets;
             }
             Query query = new Query(searchTerm);
             QueryResult result;
@@ -64,7 +75,8 @@ public class FilteredStream {
                 int tweetNumber = 1;
                 for (Status status : result.getTweets()) {
                     if (tweetNumber <= numOfTweets) {
-                        printTweet(status, queryResultNum, tweetNumber);
+                        Tweet tweet = new Tweet(status, queryResultNum, tweetNumber);
+                        listOfTweets.add(tweet);
                         tweetNumber++;
                     }
                 }
@@ -74,18 +86,7 @@ public class FilteredStream {
             twe.printStackTrace();
             System.out.println("Could not find tweets due to a TwitterException error: " + twe.getErrorMessage());
         }
-    }
 
-    /**
-     * Elegantly formats and prints tweets found using either search method
-     *
-     * @param status         Status object representing an individual tweet
-     * @param queryResultNum Current query result in search
-     * @param tweetNumber    Current tweet in search
-     */
-    private static void printTweet(Status status, int queryResultNum, int tweetNumber) {
-        System.out.println("Query Result Number #" + queryResultNum + ", Tweet Number #" + tweetNumber);
-        System.out.println("@" + status.getUser().getScreenName() + ":" + status.getText());
-        System.out.println("*************************************************************");
+        return listOfTweets;
     }
 }

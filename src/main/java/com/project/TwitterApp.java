@@ -2,8 +2,12 @@ package com.project;
 
 import com.project.config.CredentialConfiguration;
 import com.project.config.PropertyReader;
+import com.project.model.Tweet;
 import com.project.service.FilteredStream;
+import com.project.service.PrintTweet;
 import twitter4j.*;
+
+import java.util.List;
 
 public class TwitterApp {
 
@@ -17,7 +21,8 @@ public class TwitterApp {
         Twitter twitter = twitterFactory.getInstance();
 
         FilteredStream filteredStream = new FilteredStream(twitter);
-        filteredStream.search("Lebron", 1, 1);
+        List<Tweet> listOfTweets = filteredStream.search("Paul George", 2, 3);
+        PrintTweet.printTweets(listOfTweets);
 
     }
 }
