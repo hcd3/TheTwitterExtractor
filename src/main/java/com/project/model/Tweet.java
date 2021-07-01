@@ -10,8 +10,11 @@ import twitter4j.Status;
  */
 public class Tweet {
 
+    // Status object representing the user's screen name and the text of the tweet
     private final Status status;
+    // Current query result
     private final int queryResultNum;
+    // Current tweet
     private final int tweetNumber;
 
     public Tweet(Status status, int queryResultNum, int tweetNumber) {
