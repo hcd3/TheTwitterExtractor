@@ -12,8 +12,8 @@ public abstract class PrintTweet {
      */
     public static void printTweets(List<Tweet> listOfTweets) {
         for (Tweet tweet : listOfTweets) {
-            System.out.println("Query Result Number #" + tweet.getQueryResultNum() + ", Tweet Number #" + tweet.getTweetNumber());
-            System.out.println("@" + tweet.getStatus().getUser().getScreenName() + ":" + tweet.getStatus().getText());
+            System.out.println("@" + tweet.getUserName() + ":" + tweet.getText());
+            System.out.println("Date: " + tweet.getDate());
             System.out.println("*************************************************************");
         }
     }

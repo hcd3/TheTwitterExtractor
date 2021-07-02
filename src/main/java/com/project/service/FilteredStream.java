@@ -36,7 +36,7 @@ public class FilteredStream {
             int tweetNumber = 1;
             for (Status status : result.getTweets()) {
                 if (tweetNumber <= 5) {
-                    Tweet tweet = new Tweet(status, 1, tweetNumber);
+                    Tweet tweet = new Tweet(status);
                     listOfTweets.add(tweet);
                     tweetNumber++;
                 }
@@ -75,7 +75,7 @@ public class FilteredStream {
                 int tweetNumber = 1;
                 for (Status status : result.getTweets()) {
                     if (tweetNumber <= numOfTweets) {
-                        Tweet tweet = new Tweet(status, queryResultNum, tweetNumber);
+                        Tweet tweet = new Tweet(status);
                         listOfTweets.add(tweet);
                         tweetNumber++;
                     }
