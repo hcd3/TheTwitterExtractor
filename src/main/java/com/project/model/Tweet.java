@@ -1,37 +1,37 @@
 package com.project.model;
 
 import twitter4j.Status;
+import java.util.Date;
 
 /**
- * Contains the user's screen name, the text of a tweet, and information about the order it was retrieved through the
- * queryResultNum and the tweetNumber within that query.
+ * Contains the user's screen name, the text of a tweet, and the date & time it was tweeted
  *
  * Will be used primarily in FilteredStream.java
  */
 public class Tweet {
 
-    // Status object representing the user's screen name and the text of the tweet
-    private final Status status;
-    // Current query result
-    private final int queryResultNum;
-    // Current tweet
-    private final int tweetNumber;
+    // Individual who made the tweet
+    private final String userName;
+    // Contents of the tweet
+    private final String text;
+    // Date the tweet was created
+    private final Date date;
 
-    public Tweet(Status status, int queryResultNum, int tweetNumber) {
-        this.status = status;
-        this.queryResultNum = queryResultNum;
-        this.tweetNumber = tweetNumber;
+    public Tweet(Status status) {
+        this.userName = status.getUser().getScreenName();
+        this.text = status.getText();
+        this.date = status.getCreatedAt();
     }
 
-    public Status getStatus() {
-        return status;
+    public String getUserName() {
+        return userName;
     }
 
-    public int getQueryResultNum() {
-        return queryResultNum;
+    public String getText() {
+        return text;
     }
 
-    public int getTweetNumber() {
-        return tweetNumber;
+    public Date getDate() {
+        return date;
     }
 }
