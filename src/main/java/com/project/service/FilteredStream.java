@@ -51,37 +51,34 @@ public class FilteredStream {
 
     /**
      * Finds and prints real-time tweets based on the searchTerm passed
-     * Returns amount of tweets specified (numOfQueryResults * numOfTweets)
+     * Returns amount of tweets specified
      * Query object allows searching for certain strings while Status object represents an individual tweet
      * Reference: https://twitter4j.org/en/code-examples.html
      *
      * @param searchTerm        The phrase that will be searched
-     * @param numOfQueryResults Amount of Query Result objects to search; each contains a max of 15 tweets
-     * @param numOfTweets       Amount of tweets to search in each Query Result; does not exceed 15
+     * @param numOfTweets       Total amount of tweets to return
      * @return                  List of Tweet objects in the order they were retrieved
      */
-    public List<Tweet> search(String searchTerm, int numOfQueryResults, int numOfTweets) {
+    public List<Tweet> search(String searchTerm, int numOfTweets) {
         List<Tweet> listOfTweets = new ArrayList<>();
         try {
-            if (numOfQueryResults <= 0 || numOfTweets <= 0) {
+            if (numOfTweets <= 0) {
                 return listOfTweets;
             }
             Query query = new Query(searchTerm);
             QueryResult result;
-            int queryResultNum = 1;
+            int currentTweetNumber = 1;
 
             do {
                 result = twitter.search(query);
-                int tweetNumber = 1;
                 for (Status status : result.getTweets()) {
-                    if (tweetNumber <= numOfTweets) {
+                    if (currentTweetNumber <= numOfTweets) {
                         Tweet tweet = new Tweet(status);
                         listOfTweets.add(tweet);
-                        tweetNumber++;
+                        currentTweetNumber++;
                     }
                 }
-                queryResultNum++;
-            } while ((query = result.nextQuery()) != null && queryResultNum <= numOfQueryResults);
+            } while ((query = result.nextQuery()) != null && currentTweetNumber <= numOfTweets);
         } catch (TwitterException twe) {
             twe.printStackTrace();
             System.out.println("Could not find tweets due to a TwitterException error: " + twe.getErrorMessage());
