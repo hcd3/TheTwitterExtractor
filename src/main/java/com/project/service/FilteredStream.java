@@ -29,7 +29,7 @@ public class FilteredStream {
     public List<Tweet> search(String searchTerm) {
         List<Tweet> listOfTweets = new ArrayList<>();
         try {
-            // Each QueryResult will get around 15 tweets, unless otherwise assigned
+            // Each QueryResult will get around 15 tweets
             Query query = new Query(searchTerm);
             QueryResult result;
             result = twitter.search(query);
@@ -51,7 +51,7 @@ public class FilteredStream {
 
     /**
      * Finds and prints real-time tweets based on the searchTerm passed
-     * Returns amount of tweets specified
+     * Returns amount of tweets specified as a list
      * Query object allows searching for certain strings while Status object represents an individual tweet
      * Reference: https://twitter4j.org/en/code-examples.html
      *
