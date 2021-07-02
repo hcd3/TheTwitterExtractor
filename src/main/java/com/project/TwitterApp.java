@@ -1,34 +1,39 @@
 package com.project;
 
-import com.project.config.CredentialConfiguration;
-import com.project.config.PropertyReader;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.kafka.annotation.EnableKafka;
+
 import com.project.model.Tweet;
 import com.project.service.FilteredStream;
 import com.project.service.KafkaClient;
 import com.project.service.PrintTweet;
-import twitter4j.*;
 
-import java.util.List;
+@SpringBootApplication
+@EnableKafka
+public class TwitterApp implements CommandLineRunner {
 
-public class TwitterApp {
+    @Autowired
+    private KafkaClient kafkaClient;
 
-    //private final KafkaClient;
+    @Autowired
+    private FilteredStream twitterService;
 
-    public static void main(String args[]) {
-        PropertyReader propertyReader = new PropertyReader();
-        propertyReader.readPropertiesFile();
+    public static void main(String[] args) {
+        SpringApplication.run(TwitterApp.class, args);
+    }
 
-        CredentialConfiguration credentialConfig = new CredentialConfiguration(propertyReader);
-        credentialConfig.buildConfig();
-        TwitterFactory twitterFactory = credentialConfig.createTwitterFactory();
-        Twitter twitter = twitterFactory.getInstance();
-
-        FilteredStream filteredStream = new FilteredStream(twitter);
-        List<Tweet> listOfTweets = filteredStream.search("Paul George", 17);
+    @Override
+    public void run(String... args) {
+        List<Tweet> listOfTweets = twitterService.search("Paul George", 17);
         PrintTweet.printTweets(listOfTweets);
 
-        //KafkaClient kafkaClient = new KafkaClient();
-
-
+        kafkaClient.sendToTopic(listOfTweets);
     }
+
+
 }
