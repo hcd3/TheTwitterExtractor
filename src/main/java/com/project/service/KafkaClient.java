@@ -1,12 +1,15 @@
 package com.project.service;
 
 import com.project.model.Tweet;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class KafkaClient {
 
     private final String topic;
@@ -18,6 +21,7 @@ public class KafkaClient {
      * @param topic         Kafka topic tweets will be sent to
      * @param kafkaTemplate Kafka template to wrap around
      */
+    @Autowired
     public KafkaClient(@Value("${kafka.topic.twitter-extractor-topic}") String topic,
                        KafkaTemplate<String, Tweet> kafkaTemplate) {
         this.topic = topic;

@@ -4,12 +4,15 @@ import com.project.config.CredentialConfiguration;
 import com.project.config.PropertyReader;
 import com.project.model.Tweet;
 import com.project.service.FilteredStream;
+import com.project.service.KafkaClient;
 import com.project.service.PrintTweet;
 import twitter4j.*;
 
 import java.util.List;
 
 public class TwitterApp {
+
+    //private final KafkaClient;
 
     public static void main(String args[]) {
         PropertyReader propertyReader = new PropertyReader();
@@ -21,8 +24,11 @@ public class TwitterApp {
         Twitter twitter = twitterFactory.getInstance();
 
         FilteredStream filteredStream = new FilteredStream(twitter);
-        List<Tweet> listOfTweets = filteredStream.search("Paul George", 2, 3);
+        List<Tweet> listOfTweets = filteredStream.search("Paul George", 17);
         PrintTweet.printTweets(listOfTweets);
+
+        //KafkaClient kafkaClient = new KafkaClient();
+
 
     }
 }
