@@ -1,3 +1,9 @@
+spring:
+  kafka:
+    consumer:
+      group-id: "tweet-group"
 kafka:
+  broker:
+    address: localhost:9092
   topic:
     twitter-extractor-topic: tweet-topic
